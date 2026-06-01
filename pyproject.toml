@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "SceneMap"
+version = "0.0.1"
+description = "Mapping tools for SceneAPI"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "SceneAPI" },
+]
+keywords = ["mapping", "sceneapi", "scene", "reconstruction"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/SceneAPI/SceneMap"
+Repository = "https://github.com/SceneAPI/SceneMap"
+Issues = "https://github.com/SceneAPI/SceneMap/issues"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/README.md",
+  "/pyproject.toml",
+  "/src",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scenemap"]
