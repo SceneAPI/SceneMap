@@ -37,14 +37,6 @@ def test_plugin_manifest_validates_against_sfm_hub_contract() -> None:
     assert set(validated.provider_ids()) == set(EXPECTED_PROVIDER_FACTORIES)
 
 
-# W8 merge gate: the core's bundled sfm_hub registry row still carries the
-# superseded sfmapi-colmap-unified coordinates (package_name, entry_points,
-# github_url). Re-enable this comparison in W9 once the coordinate sweep
-# re-points the bundled registry at sceneapi-map / SceneAPI/SceneMap.
-@pytest.mark.skip(
-    reason="bundled registry still names the pre-merge sfmapi-colmap-unified "
-    "coordinates; unskip after the W9 registry sweep"
-)
 def test_plugin_manifest_matches_bundled_registry_manifest_when_available() -> None:
     registry_manifest = (
         REPO_ROOT.parent
