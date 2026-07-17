@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # No `submodules:` input on purpose: third_party/{colmap,instantsfm,
+      # spheresfm} are only needed to build/run engines locally; every test
+      # that touches them skips while the gitlinks are uninitialized.
+      - uses: actions/checkout@v5
+      # sceneapi is an unpublished path dependency (../sfmapi in
+      # [tool.uv.sources]); CI installs it from a sibling checkout and
+      # installs this package with --no-deps so nothing tries to resolve
+      # sceneapi from an index. scipy is this package's own runtime dep
+      # (InstantSfM's sksparse shim) not covered by sceneapi core; httpx
+      # backs the HTTP discovery tests. The COLMAP/pycolmap/InstantSfM/
+      # SphereSfM/RealityScan engines stay out of CI (marker-gated), and
+      # the sfmapi_colmap._cpp_inmemory demo extension is not part of this
+      # package (see README).
+      - uses: actions/checkout@v5
+        with:
+          repository: SceneAPI/SceneAPI
+          path: .deps/sceneapi
+      - uses: astral-sh/setup-uv@v8.1.0
+      - name: Install
+        run: |
+          uv venv --seed --python 3.12
+          uv pip install -e .deps/sceneapi
+          uv pip install pytest ruff httpx "scipy>=1.13,<2"
+          uv pip install -e . --no-deps
+      - name: Ruff
+        run: .venv/bin/ruff check src tests
+      - name: Test
+        run: .venv/bin/python -m pytest -q -m "not needs_colmap and not needs_pycolmap and not needs_sample_data and not gpu and not slow and not integration and not e2e"

@@ -1,0 +1,10 @@
+[submodule "third_party/colmap"]
+	path = third_party/colmap
+	url = https://github.com/colmap/colmap.git
+	branch = main
+[submodule "third_party/instantsfm"]
+	path = third_party/instantsfm
+	url = https://github.com/cre185/InstantSfM.git
+[submodule "third_party/spheresfm"]
+	path = third_party/spheresfm
+	url = https://github.com/json87/SphereSfM.git

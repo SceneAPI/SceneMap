@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local sceneapi demo state
+sfmapi.db
+workspace/
+blobs/
+jobs/
+
+# RealityScan scratch files
+*.rsproj
+*.rscmd
+*.log
+
+# Build outputs. The source submodules stay tracked as gitlinks.
+third_party/colmap/build/
+third_party/colmap/install/
+third_party/spheresfm/build/
+build/
+dist/
