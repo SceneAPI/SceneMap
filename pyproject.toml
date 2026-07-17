@@ -1,0 +1,99 @@
+[project]
+name = "sceneapi-map"
+version = "0.1.0"
+description = "Unified sceneapi SfM mapping backend plugins: COLMAP (colmap_native, pycolmap, colmap_cli), InstantSfM, SphereSfM, and RealityScan providers in one package"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "sceneapi>=0.1.0,<0.2",
+    # InstantSfM's plugin-private sksparse.cholmod shim is SciPy-backed; it
+    # was a hard dependency of sfmapi-instantsfm and keeps that layout here.
+    "scipy>=1.13,<2",
+]
+
+[project.optional-dependencies]
+server = []
+pycolmap = [
+    "pycolmap>=4.0.4",
+]
+pycolmap-cuda12 = [
+    "pycolmap-cuda12>=4.0.4; platform_system == 'Linux'",
+]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+mcp = [
+    "fastmcp==3.2.4",
+]
+standalone = [
+    "nuitka>=2.6",
+    "zstandard>=0.23",
+    "fastmcp==3.2.4",
+]
+test = [
+    "pytest>=8.3",
+    "ruff>=0.8",
+    "httpx>=0.28",
+]
+
+[project.scripts]
+# Console-script names are unchanged from the four superseded repos.
+sfmapi-colmap-api = "sceneapi_map.colmap.api_launcher:main_native"
+sfmapi-colmap-info = "sceneapi_map.colmap.info:main_native"
+sfmapi-pycolmap-api = "sceneapi_map.colmap.api_launcher:main_pycolmap"
+sfmapi-pycolmap-info = "sceneapi_map.colmap.info:main_pycolmap"
+sfmapi-colmap-cli-api = "sceneapi_map.colmap.api_launcher:main_cli"
+sfmapi-colmap-cli-info = "sceneapi_map.colmap.info:main_cli"
+sfmapi-instantsfm-api = "sceneapi_map.instantsfm.api_launcher:main"
+sfmapi-instantsfm-info = "sceneapi_map.instantsfm.cli:main"
+sfmapi-instantsfm-service = "sceneapi_map.instantsfm.container_service:main"
+sfmapi-spheresfm-api = "sceneapi_map.spheresfm.api_launcher:main"
+sfmapi-spheresfm-info = "sceneapi_map.spheresfm.cli:main"
+sfmapi-realityscan-api = "sceneapi_map.realityscan.api_launcher:main"
+sfmapi-realityscan-info = "sceneapi_map.realityscan.cli:main"
+
+[project.entry-points."sceneapi.backends"]
+# Entry-point names are unchanged; only the values moved into sceneapi_map.
+colmap_native = "sceneapi_map.colmap.native.plugin:plugin"
+pycolmap = "sceneapi_map.colmap.pycolmap.plugin:plugin"
+colmap_cli = "sceneapi_map.colmap.cli.plugin:plugin"
+instantsfm = "sceneapi_map.instantsfm.plugin:plugin"
+spheresfm = "sceneapi_map.spheresfm.plugin:plugin"
+realityscan_cli = "sceneapi_map.realityscan.plugin:plugin"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+# The SciPy-backed sksparse.cholmod shim ships INSIDE the package
+# (sceneapi_map/instantsfm/_sksparse_shim/) and is PYTHONPATH-injected into
+# InstantSfM worker subprocesses; never package it as a top-level
+# ``sksparse`` distribution or it will shadow real scikit-sparse installs.
+packages = ["src/sceneapi_map"]
+
+[tool.uv.sources]
+sceneapi = { path = "../sfmapi", editable = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+    "e2e: end-to-end sceneapi workflow tests",
+    "integration: tests that exercise external tools or package boundaries",
+    "needs_colmap: requires a COLMAP executable",
+    "needs_pycolmap: requires PyCOLMAP bindings",
+    "needs_sample_data: requires official COLMAP sample images",
+    "gpu: requires CUDA-capable PyCOLMAP/COLMAP dependencies",
+    "slow: slow tests that may download data or run native SfM work",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "PT", "RUF"]
+ignore = ["E501"]
