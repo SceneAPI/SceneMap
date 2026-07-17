@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (vX.Y.Z). Required for manual run."
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v7
+      - name: Resolve version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ github.event.inputs.tag }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+      - name: Check package version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          python - <<'PY'
+          import os
+          import tomllib
+          from pathlib import Path
+
+          actual = tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"]
+          expected = os.environ["VERSION"]
+          if actual != expected:
+              raise SystemExit(f"pyproject version {actual!r} does not match tag {expected!r}")
+          PY
+      - name: Build package
+        run: |
+          uv venv --seed
+          uv pip install build
+          .venv/bin/python -m build --sdist --wheel
+      - name: Publish to PyPI
+        if: github.event_name == 'push'
+        uses: pypa/gh-action-pypi-publish@release/v1
