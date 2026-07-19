@@ -286,30 +286,13 @@ MATCH_COMMANDS: dict[str, str] = {
     "transitive": "transitive_matcher",
 }
 
-# Single source of truth: the canonical COLMAP stage-config table lives in the
-# sfmapi framework. Importing it (rather than re-declaring locally) keeps the
-# three COLMAP-family plugins from drifting; this plugin previously lacked the
-# from_poses row despite advertising the pairs.from_poses capability, which it
-# now picks up. Deferred import avoids any plugin-load ordering surprise.
-from sceneapi.backends import COLMAP_STAGE_CONFIGS as COLMAP_BACKEND_CONFIGS  # noqa: E402
-
-RUNTIME_MANAGED_COLMAP_OPTIONS = {
-    "database_path",
-    "image_path",
-    "image_list_path",
-    "input_path",
-    "input_path1",
-    "input_path2",
-    "output_path",
-    "workspace_path",
-    "project_path",
-    "match_list_path",
-    "help",
-    "log_level",
-    "log_to_stderr",
-    "log_color",
-    "log_target",
-}
+# Single source of truth: the canonical COLMAP stage-config table + the
+# runtime-managed CLI option set are COLMAP vendor data, owned by the
+# plugin-local stage_configs module and shared by all three COLMAP-family
+# providers so their served config schemas cannot drift. Deferred import
+# keeps it out of the top-of-module block.
+from ..stage_configs import COLMAP_STAGE_CONFIGS as COLMAP_BACKEND_CONFIGS  # noqa: E402
+from ..stage_configs import RUNTIME_MANAGED_COLMAP_OPTIONS  # noqa: E402
 
 _COLMAP_OPTION_LINE_RE = re.compile(
     r"^\s*(?:(?P<short>-\w)\s+\[\s*(?P<long_alias>--[\w.\-]+)\s*\]|"
