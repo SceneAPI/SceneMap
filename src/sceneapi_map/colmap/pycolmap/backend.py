@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from ..io_mapper import ColmapMapper
 from ..model import Reconstruction, read_colmap_text_model
 
 try:
@@ -544,7 +545,7 @@ def _manual_option_type(default: Any, choices: list[str] | None) -> str:
     return "string"
 
 
-class ColmapCliBackend:
+class ColmapCliBackend(ColmapMapper):
     """sfmapi backend that shells out to the upstream COLMAP CLI."""
 
     name = "colmap_cli"

@@ -1,12 +1,16 @@
 [project]
 name = "sceneapi-map"
-version = "0.1.0"
+version = "0.2.0"
 description = "Unified sceneapi SfM mapping backend plugins: COLMAP (colmap_native, pycolmap, colmap_cli), InstantSfM, SphereSfM, and RealityScan providers in one package"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "sceneapi>=0.1.0,<0.2",
+    # The COLMAP ColmapMapper conformer implements sceneapi-io's neutral
+    # mapping procedure contract (Mapper/MappingResult) + reuses its
+    # colmap_db pair-id encoding for the graph->database translation.
+    "sceneapi-io>=0.2,<0.3",
     # InstantSfM's plugin-private sksparse.cholmod shim is SciPy-backed; it
     # was a hard dependency of sfmapi-instantsfm and keeps that layout here.
     "scipy>=1.13,<2",
@@ -76,6 +80,7 @@ packages = ["src/sceneapi_map"]
 
 [tool.uv.sources]
 sceneapi = { path = "../sfmapi", editable = true }
+sceneapi-io = { path = "../SceneIO", editable = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
