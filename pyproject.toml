@@ -1,7 +1,7 @@
 [project]
 name = "sceneapi-map"
-version = "0.2.0"
-description = "Unified sceneapi SfM mapping backend plugins: COLMAP (colmap_native, pycolmap, colmap_cli), InstantSfM, SphereSfM, and RealityScan providers in one package"
+version = "0.3.0"
+description = "Unified sceneapi SfM mapping backend plugins: COLMAP (colmap_native, pycolmap, colmap_cli), InstantSfM, SphereSfM, RealityScan, and MapAnything (feed-forward) providers in one package"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.12,<3.13"
@@ -23,6 +23,16 @@ pycolmap = [
 ]
 pycolmap-cuda12 = [
     "pycolmap-cuda12>=4.0.4; platform_system == 'Linux'",
+]
+# MapAnything feed-forward engine deps — HEAVY, deferred to provisioning and
+# NOT installed in CI (CI uses --extra dev). The `mapanything` model package
+# is git-only (not on PyPI) and is installed by
+# `sceneapi_map.mapanything.provisioning` together with a CUDA Torch build and
+# the model weights; only the PyPI-resolvable runtime deps are pinned here.
+mapanything = [
+    "torch>=2.4",
+    "torchvision>=0.19",
+    "pillow>=10",
 ]
 dev = [
     "pytest>=8.3",
@@ -66,6 +76,7 @@ colmap_cli = "sceneapi_map.colmap.cli.plugin:plugin"
 instantsfm = "sceneapi_map.instantsfm.plugin:plugin"
 spheresfm = "sceneapi_map.spheresfm.plugin:plugin"
 realityscan_cli = "sceneapi_map.realityscan.plugin:plugin"
+mapanything = "sceneapi_map.mapanything.plugin:plugin"
 
 [build-system]
 requires = ["hatchling"]
@@ -90,6 +101,7 @@ markers = [
     "integration: tests that exercise external tools or package boundaries",
     "needs_colmap: requires a COLMAP executable",
     "needs_pycolmap: requires PyCOLMAP bindings",
+    "needs_mapanything: requires the MapAnything engine (torch + mapanything + weights)",
     "needs_sample_data: requires official COLMAP sample images",
     "gpu: requires CUDA-capable PyCOLMAP/COLMAP dependencies",
     "slow: slow tests that may download data or run native SfM work",

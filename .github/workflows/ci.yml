@@ -36,4 +36,4 @@ jobs:
       - name: Ruff
         run: .venv/bin/ruff check src tests
       - name: Test
-        run: .venv/bin/python -m pytest -q -m "not needs_colmap and not needs_pycolmap and not needs_sample_data and not gpu and not slow and not integration and not e2e"
+        run: .venv/bin/python -m pytest -q -m "not needs_colmap and not needs_pycolmap and not needs_mapanything and not needs_sample_data and not gpu and not slow and not integration and not e2e"
