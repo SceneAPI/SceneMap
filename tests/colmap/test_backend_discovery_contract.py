@@ -5,8 +5,8 @@ from typing import Any
 
 import pytest
 
-from sceneapi_map.colmap.cli.backend import ColmapCliBackend as CliColmapCliBackend
-from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
+from scenemap.colmap.cli.backend import ColmapCliBackend as CliColmapCliBackend
+from scenemap.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
 
 # sfmapi_pycolmap and sfmapi_colmap_cli carried this file as import-only
 # variants over their own ColmapCliBackend implementations; parametrize

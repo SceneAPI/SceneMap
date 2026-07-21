@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-from sceneapi_io.data import (
+from sceneio.data import (
     SE3,
     Calibration,
     CameraIntrinsics,
@@ -24,15 +24,15 @@ from sceneapi_io.data import (
     RayMap,
     ViewInput,
 )
-from sceneapi_io.mapping import Mapper, MapperTraits, MappingOptions, MappingResult
-from sceneapi_io.testing import (
+from sceneio.mapping import Mapper, MapperTraits, MappingOptions, MappingResult
+from sceneio.testing import (
     assert_mapper_conformance,
     make_synthetic_correspondence_graph,
     make_synthetic_views,
 )
 
-import sceneapi_map.mapanything.backend as backend_mod
-from sceneapi_map.mapanything.backend import (
+import scenemap.mapanything.backend as backend_mod
+from scenemap.mapanything.backend import (
     APACHE_WEIGHTS,
     CC_BY_NC_WEIGHTS,
     DEFAULT_WEIGHTS,
@@ -89,11 +89,11 @@ def _install_mock(monkeypatch, pred_for=None) -> None:
     monkeypatch.setattr(backend_mod, "_run_inference", _mock_infer)
 
 
-# --- (a) sceneapi-io conformance (always runs) -----------------------------
+# --- (a) sceneio conformance (always runs) -----------------------------
 
 
 def test_mock_inference_conformance(monkeypatch):
-    """Full sceneapi-io mapper conformance against the real backend + mock engine."""
+    """Full sceneio mapper conformance against the real backend + mock engine."""
     _install_mock(monkeypatch)
     backend = MapAnythingBackend()
 

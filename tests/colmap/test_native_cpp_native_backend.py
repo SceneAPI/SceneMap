@@ -5,12 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.native.backend import (
+from scenemap.colmap.native.backend import (
     COLMAP_COMMANDS,
     CapabilityUnavailableError,
     ValidationError,
 )
-from sceneapi_map.colmap.native.cpp_native_backend import CppNativeBackend
+from scenemap.colmap.native.cpp_native_backend import CppNativeBackend
 
 OPTIONAL_DISABLED_COMMANDS = {"delaunay_mesher": "requires CGAL"}
 

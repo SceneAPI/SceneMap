@@ -19,7 +19,7 @@ copy_runtime_directory() {
   cp -R "$source"/. "$destination"/
 }
 
-"$python_executable" -c "import sceneapi, sceneapi_map.colmap, uvicorn, fastmcp; import nuitka"
+"$python_executable" -c "import sceneapi, scenemap.colmap, uvicorn, fastmcp; import nuitka"
 
 if [[ "$clean" == "1" || "$clean" == "ON" ]]; then
   rm -rf "$output_dir"
@@ -31,7 +31,7 @@ fi
   --output-dir="$output_dir" \
   --output-filename="$output_name" \
   --include-package=sceneapi \
-  --include-package=sceneapi_map.colmap \
+  --include-package=scenemap.colmap \
   --include-package=uvicorn \
   --include-package=fastmcp \
   --include-package=fastapi \
@@ -55,7 +55,7 @@ fi
   --include-module=uvicorn.protocols.websockets.auto \
   --include-module=uvicorn.lifespan.on \
   --noinclude-pytest-mode=nofollow \
-  src/sceneapi_map/colmap/api_launcher.py
+  src/scenemap/colmap/api_launcher.py
 
 dist_dir="$output_dir/$output_name.dist"
 actual_dist_dir="$output_dir/api_launcher.dist"

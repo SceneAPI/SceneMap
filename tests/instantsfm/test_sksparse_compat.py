@@ -8,16 +8,16 @@ import sys
 import numpy as np
 from scipy.sparse import csc_matrix
 
-from sceneapi_map.instantsfm.backend import SKSPARSE_SHIM_DIR, instantsfm_pythonpath
+from scenemap.instantsfm.backend import SKSPARSE_SHIM_DIR, instantsfm_pythonpath
 
 
 def test_shim_is_not_installed_as_top_level_sksparse() -> None:
-    """The shim is plugin-private: installing sceneapi-map must never own
+    """The shim is plugin-private: installing scenemap must never own
     a top-level ``sksparse`` package that shadows real scikit-sparse."""
     spec = importlib.util.find_spec("sksparse")
 
     if spec is not None and spec.origin:
-        assert "sceneapi_map.instantsfm" not in spec.origin
+        assert "scenemap.instantsfm" not in spec.origin
 
 
 def test_worker_pythonpath_prepends_root_and_shim(tmp_path) -> None:

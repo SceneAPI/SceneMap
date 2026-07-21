@@ -7,13 +7,13 @@ from typing import Any
 
 import pytest
 
-from sceneapi_map.colmap.pycolmap.plugin import (
+from scenemap.colmap.pycolmap.plugin import (
     PLUGIN_MANIFEST,
     get_plugin_manifest,
     plugin,
     register,
 )
-from sceneapi_map.colmap.pycolmap_backend import PycolmapBackend
+from scenemap.colmap.pycolmap_backend import PycolmapBackend
 
 # Union of sfmapi_pycolmap's test_plugin.py + test_plugin_contract.py
 # (they overlapped heavily; near-duplicate assertions merged).
@@ -28,10 +28,10 @@ def test_plugin_manifest_ids_match_hub_registry_expectations() -> None:
     assert manifest is get_plugin_manifest()
     assert manifest["plugin_id"] == "pycolmap"
     # Manifest identity was re-pointed at this merged repo (see README
-    # migration notes): package/repo coordinates name sceneapi-map
+    # migration notes): package/repo coordinates name scenemap
     # while the plugin id stays pycolmap.
-    assert manifest["entry_points"] == ["sceneapi_map.colmap.pycolmap.plugin:plugin"]
-    assert manifest["package_name"] == "sceneapi-map"
+    assert manifest["entry_points"] == ["scenemap.colmap.pycolmap.plugin:plugin"]
+    assert manifest["package_name"] == "scenemap"
     assert [provider["provider_id"] for provider in manifest["providers"]] == ["colmap_pycolmap"]
 
 
@@ -48,7 +48,7 @@ def test_declared_entry_point_loads_plugin_object() -> None:
     pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     entry_point_value = pyproject["project"]["entry-points"]["sceneapi.backends"]["pycolmap"]
 
-    assert entry_point_value == "sceneapi_map.colmap.pycolmap.plugin:plugin"
+    assert entry_point_value == "scenemap.colmap.pycolmap.plugin:plugin"
     loaded = metadata.EntryPoint(
         name="pycolmap",
         value=entry_point_value,

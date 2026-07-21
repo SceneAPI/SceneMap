@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from sceneapi_map.colmap import provisioning
+from scenemap.colmap import provisioning
 
 # The release-asset selection tests shipped byte-identical (modulo
 # imports) in sfmapi_colmap and sfmapi_colmap_cli; the machinery is now

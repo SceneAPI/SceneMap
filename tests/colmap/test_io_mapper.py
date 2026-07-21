@@ -1,4 +1,4 @@
-"""Tests for the COLMAP ``ColmapMapper`` sceneapi-io conformer.
+"""Tests for the COLMAP ``ColmapMapper`` sceneio conformer.
 
 The engine is replaced with a canned in-memory reconstruction built FROM
 the database the graph translator wrote, so these run without pycolmap or
@@ -13,8 +13,8 @@ import sqlite3
 
 import numpy as np
 import pytest
-from sceneapi_io.colmap_db import image_pair_to_pair_id
-from sceneapi_io.data import (
+from sceneio.colmap_db import image_pair_to_pair_id
+from sceneio.data import (
     SE3,
     CameraModel,
     CorrespondenceGraph,
@@ -22,21 +22,21 @@ from sceneapi_io.data import (
     PosePrior,
     ViewInput,
 )
-from sceneapi_io.errors import ContractViolation
-from sceneapi_io.mapping import Mapper, MapperTraits, MappingOptions, MappingResult
-from sceneapi_io.testing import (
+from sceneio.errors import ContractViolation
+from sceneio.mapping import Mapper, MapperTraits, MappingOptions, MappingResult
+from sceneio.testing import (
     assert_mapper_conformance,
     make_synthetic_correspondence_graph,
     make_synthetic_views,
 )
 
-from sceneapi_map.colmap.cli.backend import ColmapCliBackend
-from sceneapi_map.colmap.io_mapper import (
+from scenemap.colmap.cli.backend import ColmapCliBackend
+from scenemap.colmap.io_mapper import (
     ColmapMapper,
     graph_to_colmap_database,
     view_name,
 )
-from sceneapi_map.colmap.model import (
+from scenemap.colmap.model import (
     Camera,
     Image,
     Point3D,
@@ -271,7 +271,7 @@ def test_view_name_matches_graph_keys():
 
 
 def test_conformance_fake_engine():
-    """The fake-engine variant always runs — full sceneapi-io conformance."""
+    """The fake-engine variant always runs — full sceneio conformance."""
     backend = _FakeEngineColmapBackend(skip_names={"view002"})
     result = assert_mapper_conformance(backend)
     # view002 was deliberately left unregistered; the kit tolerates the None.
@@ -289,7 +289,7 @@ def test_real_pycolmap_backend_is_a_conforming_mapper():
     ``requires_correspondences`` guard, which run before the engine.
     """
     pytest.importorskip("pycolmap")
-    from sceneapi_map.colmap.pycolmap_backend import PycolmapBackend
+    from scenemap.colmap.pycolmap_backend import PycolmapBackend
 
     backend = PycolmapBackend()
     assert isinstance(backend, Mapper)
@@ -302,8 +302,8 @@ def test_real_pycolmap_backend_is_a_conforming_mapper():
 
 
 def test_colmap_mapper_is_a_mixin_on_all_providers():
-    from sceneapi_map.colmap.native.backend import ColmapCliBackend as NativeBackend
-    from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend as PycolmapCliBackend
+    from scenemap.colmap.native.backend import ColmapCliBackend as NativeBackend
+    from scenemap.colmap.pycolmap.backend import ColmapCliBackend as PycolmapCliBackend
 
     for backend_cls in (ColmapCliBackend, NativeBackend, PycolmapCliBackend):
         assert issubclass(backend_cls, ColmapMapper)

@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.instantsfm.backend import InstantSfMBackend
+from scenemap.instantsfm.backend import InstantSfMBackend
 
 
 def _fake_instantsfm(root: Path) -> Path:

@@ -6,25 +6,25 @@ import tomllib
 from importlib import import_module
 from pathlib import Path
 
-from sceneapi_map.mapanything.backend import (
+from scenemap.mapanything.backend import (
     APACHE_WEIGHTS,
     CC_BY_NC_WEIGHTS,
     WEIGHTS_ENV_VAR,
     MapAnythingBackend,
 )
-from sceneapi_map.mapanything.plugin import get_plugin_manifest, plugin
-from sceneapi_map.mapanything.provisioning import provision
+from scenemap.mapanything.plugin import get_plugin_manifest, plugin
+from scenemap.mapanything.provisioning import provision
 
 
 def test_plugin_manifest_matches_hub_contract() -> None:
     manifest = get_plugin_manifest()
 
     assert manifest["plugin_id"] == "mapanything"
-    assert manifest["entry_points"] == ["sceneapi_map.mapanything.plugin:plugin"]
+    assert manifest["entry_points"] == ["scenemap.mapanything.plugin:plugin"]
     assert [provider["provider_id"] for provider in manifest["providers"]] == ["mapanything"]
-    assert manifest["package_name"] == "sceneapi-map"
+    assert manifest["package_name"] == "scenemap"
     assert manifest["github_url"] == "https://github.com/SceneAPI/SceneMap.git"
-    assert manifest["runtime_modes"]["uv"]["package"] == "sceneapi-map"
+    assert manifest["runtime_modes"]["uv"]["package"] == "scenemap"
     assert manifest["runtime_modes"]["docker"] is None
     assert manifest["compatibility"]["torch"]["device"] == "cuda"
 
@@ -56,7 +56,7 @@ def test_pyproject_declares_backend_entry_point_and_extra() -> None:
     pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
 
     entry_points = pyproject["project"]["entry-points"]["sceneapi.backends"]
-    assert entry_points["mapanything"] == "sceneapi_map.mapanything.plugin:plugin"
+    assert entry_points["mapanything"] == "scenemap.mapanything.plugin:plugin"
     assert pyproject["project"]["version"] == "0.3.0"
     # Heavy engine deps live in the opt-in extra (deferred to provisioning).
     assert "mapanything" in pyproject["project"]["optional-dependencies"]

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.instantsfm import provisioning
+from scenemap.instantsfm import provisioning
 
 
 def test_torch_runtime_reinstalls_when_installed_wheel_is_cpu(

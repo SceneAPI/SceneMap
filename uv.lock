@@ -1494,7 +1494,7 @@ dependencies = [
     { name = "python-multipart" },
     { name = "python-ulid" },
     { name = "redis" },
-    { name = "sceneapi-io" },
+    { name = "sceneio" },
     { name = "sqlalchemy" },
     { name = "sse-starlette" },
     { name = "structlog" },
@@ -1532,7 +1532,7 @@ requires-dist = [
     { name = "redis", specifier = ">=5.2" },
     { name = "respx", marker = "extra == 'dev'", specifier = ">=0.21" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.8" },
-    { name = "sceneapi-io", editable = "../SceneIO" },
+    { name = "sceneio", editable = "../SceneIO" },
     { name = "sqlalchemy", specifier = ">=2.0.36" },
     { name = "sse-starlette", specifier = ">=2.1" },
     { name = "structlog", specifier = ">=24.4" },
@@ -1541,7 +1541,7 @@ requires-dist = [
 provides-extras = ["dev", "image-processing", "projection", "mcp"]
 
 [[package]]
-name = "sceneapi-io"
+name = "sceneio"
 version = "0.2.0"
 source = { editable = "../SceneIO" }
 dependencies = [
@@ -1557,12 +1557,12 @@ requires-dist = [
 provides-extras = ["dev"]
 
 [[package]]
-name = "sceneapi-map"
+name = "scenemap"
 version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "sceneapi" },
-    { name = "sceneapi-io" },
+    { name = "sceneio" },
     { name = "scipy" },
 ]
 
@@ -1610,7 +1610,7 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.8" },
     { name = "ruff", marker = "extra == 'test'", specifier = ">=0.8" },
     { name = "sceneapi", editable = "../sfmapi" },
-    { name = "sceneapi-io", editable = "../SceneIO" },
+    { name = "sceneio", editable = "../SceneIO" },
     { name = "scipy", specifier = ">=1.13,<2" },
     { name = "torch", marker = "extra == 'mapanything'", specifier = ">=2.4" },
     { name = "torchvision", marker = "extra == 'mapanything'", specifier = ">=0.19" },

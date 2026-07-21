@@ -1,22 +1,22 @@
-# sceneapi-map
+# scenemap
 
 One package for the four SfM mapping plugin families that previously shipped
 as four separate repos (`sfmapi_colmap_unified`, `sfmapi_instantsfm`,
 `sfmapi_spheresfm`, `sfmapi_realityscan`). Each plugin keeps its own manifest,
 entry point, and launcher; the COLMAP family keeps the internal structure it
 already had from its own three-repo merge, re-rooted under
-`sceneapi_map.colmap`. This is the first release against the renamed core:
+`scenemap.colmap`. This is the first release against the renamed core:
 the dependency is `sceneapi` (0.1.x), imports use the `sceneapi.*` facades,
 and the entry-point group is `sceneapi.backends`.
 
 | Entry point (`sceneapi.backends`) | Plugin module | Provider ids | Launcher |
 |---|---|---|---|
-| `colmap_native` | `sceneapi_map.colmap.native.plugin` | `colmap_cli`, `colmap_pycolmap`, `colmap_cpp_native`, `colmap_cpp_inmemory` | `sfmapi-colmap-api` |
-| `pycolmap` | `sceneapi_map.colmap.pycolmap.plugin` | `colmap_pycolmap` | `sfmapi-pycolmap-api` |
-| `colmap_cli` | `sceneapi_map.colmap.cli.plugin` | `colmap_cli` | `sfmapi-colmap-cli-api` |
-| `instantsfm` | `sceneapi_map.instantsfm.plugin` | `instantsfm` | `sfmapi-instantsfm-api` |
-| `spheresfm` | `sceneapi_map.spheresfm.plugin` | `spheresfm` | `sfmapi-spheresfm-api` |
-| `realityscan_cli` | `sceneapi_map.realityscan.plugin` | `realityscan_cli` | `sfmapi-realityscan-api` |
+| `colmap_native` | `scenemap.colmap.native.plugin` | `colmap_cli`, `colmap_pycolmap`, `colmap_cpp_native`, `colmap_cpp_inmemory` | `sfmapi-colmap-api` |
+| `pycolmap` | `scenemap.colmap.pycolmap.plugin` | `colmap_pycolmap` | `sfmapi-pycolmap-api` |
+| `colmap_cli` | `scenemap.colmap.cli.plugin` | `colmap_cli` | `sfmapi-colmap-cli-api` |
+| `instantsfm` | `scenemap.instantsfm.plugin` | `instantsfm` | `sfmapi-instantsfm-api` |
+| `spheresfm` | `scenemap.spheresfm.plugin` | `spheresfm` | `sfmapi-spheresfm-api` |
+| `realityscan_cli` | `scenemap.realityscan.plugin` | `realityscan_cli` | `sfmapi-realityscan-api` |
 
 Family notes:
 
@@ -27,7 +27,7 @@ Family notes:
 - **InstantSfM** — action-first wrapper over the upstream global-SfM engine
   (portable `map.global` via a path-staging adapter). Ships the
   plugin-private SciPy-backed `sksparse.cholmod` shim
-  (`sceneapi_map/instantsfm/_sksparse_shim/`, PYTHONPATH-injected into worker
+  (`scenemap/instantsfm/_sksparse_shim/`, PYTHONPATH-injected into worker
   subprocesses — deliberately never installed as a top-level `sksparse`
   package). Also exposes an `sfmapi-plugin-http-v1` container service
   (`sfmapi-instantsfm-service`, `Dockerfile`).
@@ -41,8 +41,8 @@ Family notes:
 ## Install and extras
 
 ```bash
-uv pip install sceneapi-map              # CLI-driven providers work with engines on PATH
-uv pip install "sceneapi-map[pycolmap]"  # + pycolmap wheel for the in-process provider
+uv pip install scenemap              # CLI-driven providers work with engines on PATH
+uv pip install "scenemap[pycolmap]"  # + pycolmap wheel for the in-process provider
 ```
 
 Extras (union of the four source repos, deduped; layouts unchanged):
@@ -73,9 +73,9 @@ sfmapi-realityscan-api --rc-executable <path>
 The `sfmapi-*-info` commands print each provider's runtime versions as
 before, and `sfmapi-instantsfm-service` runs the InstantSfM
 `sfmapi-plugin-http-v1` container service. ASGI module paths for uvicorn
-import strings: `sceneapi_map.colmap.{native,pycolmap,cli}.server:app`,
-`sceneapi_map.instantsfm.server:app`, `sceneapi_map.spheresfm.server:app`,
-`sceneapi_map.realityscan.server:app`. Example launch scripts live in
+import strings: `scenemap.colmap.{native,pycolmap,cli}.server:app`,
+`scenemap.instantsfm.server:app`, `scenemap.spheresfm.server:app`,
+`scenemap.realityscan.server:app`. Example launch scripts live in
 `examples/` (one per family).
 
 ## Development
@@ -147,13 +147,13 @@ superseded `sfmapi_colmap`, `sfmapi_pycolmap`, and `sfmapi_colmap_cli`).
   live in the `sceneapi.backends` group (the renamed core also reads the
   legacy `sfmapi.backends` group for one release). Only the entry-point
   *values* move (e.g. `sfmapi_instantsfm.plugin:plugin` →
-  `sceneapi_map.instantsfm.plugin:plugin`).
+  `scenemap.instantsfm.plugin:plugin`).
 - **Console scripts are unchanged**: all thirteen `sfmapi-*` scripts from
   the four source repos are preserved byte-for-name.
 - **Manifest identity now names this repo**: `package_name`
-  (`sceneapi-map`), `github_url`
+  (`scenemap`), `github_url`
   (`https://github.com/SceneAPI/SceneMap.git`), `entry_points`
-  (`sceneapi_map.<family>...:plugin`), the `uv` runtime-mode install
+  (`scenemap.<family>...:plugin`), the `uv` runtime-mode install
   coordinates, and InstantSfM's `container_service.image.build.context`
   (its `Dockerfile` moved here, still at the repo root). Plugin ids,
   provider ids, capability/action/config/artifact declarations,
@@ -165,15 +165,15 @@ superseded `sfmapi_colmap`, `sfmapi_pycolmap`, and `sfmapi_colmap_cli`).
 - **Env vars are unchanged**: plugins keep reading/writing `SFMAPI_*`
   names (`SFMAPI_COLMAP_EXECUTABLE`, `SFMAPI_INSTANTSFM_ROOT`, ...); the
   renamed core honors the `SFMAPI_*` prefix via a one-release alias.
-- **Direct importers**: `sfmapi_colmap_unified.X` → `sceneapi_map.colmap.X`;
-  `sfmapi_instantsfm.X` → `sceneapi_map.instantsfm.X`; `sfmapi_spheresfm.X`
-  → `sceneapi_map.spheresfm.X`; `sfmapi_realityscan.X` →
-  `sceneapi_map.realityscan.X` (the colmap subpackage's own mapping from
+- **Direct importers**: `sfmapi_colmap_unified.X` → `scenemap.colmap.X`;
+  `sfmapi_instantsfm.X` → `scenemap.instantsfm.X`; `sfmapi_spheresfm.X`
+  → `scenemap.spheresfm.X`; `sfmapi_realityscan.X` →
+  `scenemap.realityscan.X` (the colmap subpackage's own mapping from
   the D3/L43 three-repo merge is reproduced below).
 
 ## RECONCILIATION NOTES (ported from the source merges)
 
-### `sfmapi_colmap_unified` (now `sceneapi_map.colmap`) — D3 / register L43
+### `sfmapi_colmap_unified` (now `scenemap.colmap`) — D3 / register L43
 
 Carried unchanged from that repo's merge of `sfmapi_colmap`,
 `sfmapi_pycolmap`, and `sfmapi_colmap_cli`:
@@ -210,7 +210,7 @@ Carried unchanged from that repo's merge of `sfmapi_colmap`,
   (`provision_native` / `provision_pycolmap` / `provision_cli`) preserve
   each source repo's exact step set and detection strategy, and the
   package-level hook `provision()` runs the superset (= native) path. The
-  GitHub API User-Agent follows the package name (now `sceneapi-map`;
+  GitHub API User-Agent follows the package name (now `scenemap`;
   cosmetic).
 - **`api_launcher.py`** is one provider-parameterized module. Preserved per
   provider: prog names, `--backend` choices and defaults, the cli launcher
@@ -250,7 +250,7 @@ its subpackage. The deliberate deltas, all mechanical:
 - The Nuitka standalone scripts bundle the core as `sceneapi` (the `app`
   shim they previously named was removed in core 0.1.0).
 - InstantSfM's `Dockerfile` installs the core from
-  `SceneAPI/SceneAPI@SCENEAPI_REF` and this package as `sceneapi-map`;
+  `SceneAPI/SceneAPI@SCENEAPI_REF` and this package as `scenemap`;
   engine build steps are untouched.
 - InstantSfM's upstream-patch test gained the standard
   submodule-uninitialized skip gate (its source repo always ran with the

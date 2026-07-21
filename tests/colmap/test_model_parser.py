@@ -5,10 +5,10 @@ import struct
 
 import pytest
 
-from sceneapi_map.colmap.cli.backend import ColmapCliBackend as CliColmapCliBackend
-from sceneapi_map.colmap.model import read_colmap_text_model
-from sceneapi_map.colmap.native.backend import ColmapCliBackend as NativeColmapCliBackend
-from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
+from scenemap.colmap.cli.backend import ColmapCliBackend as CliColmapCliBackend
+from scenemap.colmap.model import read_colmap_text_model
+from scenemap.colmap.native.backend import ColmapCliBackend as NativeColmapCliBackend
+from scenemap.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
 
 # The three superseded repos carried this file as near-byte-identical
 # copies differing only in which package's ColmapCliBackend they

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.native.backend import COLMAP_COMMANDS
+from scenemap.colmap.native.backend import COLMAP_COMMANDS
 
 # From sfmapi_colmap's test_colmap_native_contract.py. The shared
 # submodule test moved to test_submodule_contract.py; the build scripts

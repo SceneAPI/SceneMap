@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.native.backend import ColmapCliBackend as NativeColmapCliBackend
-from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
-from sceneapi_map.colmap.pycolmap_backend import PycolmapBackend
+from scenemap.colmap.native.backend import ColmapCliBackend as NativeColmapCliBackend
+from scenemap.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
+from scenemap.colmap.pycolmap_backend import PycolmapBackend
 
 # sfmapi_colmap's suite was a superset of sfmapi_pycolmap's (one extra
 # artifact-input test); the CLI-driven tests are parametrized over both

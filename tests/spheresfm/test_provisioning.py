@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from sceneapi_map.spheresfm import provisioning
+from scenemap.spheresfm import provisioning
 
 
 def _asset(name: str, url: str = "https://example.test/asset.zip") -> dict[str, str]:

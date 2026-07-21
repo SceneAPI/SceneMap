@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.realityscan.backend import RealityScanCliBackend
+from scenemap.realityscan.backend import RealityScanCliBackend
 
 
 def _fake_realityscan(path: Path) -> Path:

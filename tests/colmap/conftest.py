@@ -10,8 +10,8 @@ from typing import NamedTuple
 
 import pytest
 
-from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend, colmap_runtime_env
-from sceneapi_map.colmap.pycolmap_backend import register_pycolmap_dll_directories
+from scenemap.colmap.pycolmap.backend import ColmapCliBackend, colmap_runtime_env
+from scenemap.colmap.pycolmap_backend import register_pycolmap_dll_directories
 
 SOUTH_BUILDING_URL = "https://github.com/colmap/colmap/releases/download/3.11.1/south-building.zip"
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp", ".webp"}

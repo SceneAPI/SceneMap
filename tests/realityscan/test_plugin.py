@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.realityscan.backend import RealityScanCliBackend
-from sceneapi_map.realityscan.plugin import PLUGIN_ID, PROVIDER_ID, manifest, plugin
+from scenemap.realityscan.backend import RealityScanCliBackend
+from scenemap.realityscan.plugin import PLUGIN_ID, PROVIDER_ID, manifest, plugin
 
 
 def test_plugin_manifest_validates_against_sfmapi_contract() -> None:
@@ -18,7 +18,7 @@ def test_plugin_manifest_validates_against_sfmapi_contract() -> None:
 
     assert validated.plugin_id == "realityscan_cli"
     assert validated.provider_ids() == ["realityscan_cli"]
-    assert validated.entry_points == ["sceneapi_map.realityscan.plugin:plugin"]
+    assert validated.entry_points == ["scenemap.realityscan.plugin:plugin"]
     assert validated.runtime_modes.external_tool is not None
     assert validated.runtime_modes.external_tool.executable_names == [
         "RealityScan.exe",
@@ -50,7 +50,7 @@ def test_pyproject_declares_importable_sfmapi_backend_entry_point() -> None:
     # The unified pyproject now declares all six entry points; this
     # provider's row must keep its historical name (the source repo
     # asserted the whole single-entry table).
-    assert entry_points[PLUGIN_ID] == "sceneapi_map.realityscan.plugin:plugin"
+    assert entry_points[PLUGIN_ID] == "scenemap.realityscan.plugin:plugin"
 
     entry_point = EntryPoint(
         name=PLUGIN_ID,

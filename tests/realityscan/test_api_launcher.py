@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.realityscan.api_launcher import build_parser, configure_environment
-from sceneapi_map.realityscan.backend import (
+from scenemap.realityscan.api_launcher import build_parser, configure_environment
+from scenemap.realityscan.backend import (
     RealityScanCliBackend,
     configure_reality_cli_environment,
     configure_realityscan_environment,

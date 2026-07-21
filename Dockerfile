@@ -57,7 +57,7 @@ RUN if [ -f third_party/instantsfm/pyproject.toml ]; then \
     fi
 RUN uv pip install "sceneapi @ git+https://github.com/SceneAPI/SceneAPI.git@${SCENEAPI_REF}"
 RUN uv pip install --no-sources ".[server]"
-RUN python -c "from sceneapi_map.instantsfm.provisioning import provision; import json; print(json.dumps(provision(force=True), indent=2))"
+RUN python -c "from scenemap.instantsfm.provisioning import provision; import json; print(json.dumps(provision(force=True), indent=2))"
 
 EXPOSE 8096
-CMD ["python", "-m", "sceneapi_map.instantsfm.container_service"]
+CMD ["python", "-m", "scenemap.instantsfm.container_service"]

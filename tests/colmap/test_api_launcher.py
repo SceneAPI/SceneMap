@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap import api_launcher
-from sceneapi_map.colmap.cli.backend import (
+from scenemap.colmap import api_launcher
+from scenemap.colmap.cli.backend import (
     ColmapCliBackend,
     configure_colmap_environment,
     resolve_colmap_executable,
@@ -97,7 +97,7 @@ def test_native_launcher_reload_uses_import_string(monkeypatch):
 
     assert calls == [
         (
-            "sceneapi_map.colmap.native.server:app",
+            "scenemap.colmap.native.server:app",
             {
                 "host": "127.0.0.1",
                 "port": 8000,

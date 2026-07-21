@@ -4,15 +4,15 @@ import tomllib
 from importlib import import_module
 from pathlib import Path
 
-from sceneapi_map.spheresfm.backend import SPHERESFM_CAPABILITIES, SphereSfMBackend
-from sceneapi_map.spheresfm.plugin import get_plugin_manifest, plugin
+from scenemap.spheresfm.backend import SPHERESFM_CAPABILITIES, SphereSfMBackend
+from scenemap.spheresfm.plugin import get_plugin_manifest, plugin
 
 
 def test_plugin_manifest_matches_hub_contract() -> None:
     manifest = get_plugin_manifest()
 
     assert manifest["plugin_id"] == "spheresfm"
-    assert manifest["entry_points"] == ["sceneapi_map.spheresfm.plugin:plugin"]
+    assert manifest["entry_points"] == ["scenemap.spheresfm.plugin:plugin"]
     assert [provider["provider_id"] for provider in manifest["providers"]] == ["spheresfm"]
 
 
@@ -20,7 +20,7 @@ def test_pyproject_declares_sfmapi_backend_entry_point() -> None:
     pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
 
     entry_points = pyproject["project"]["entry-points"]["sceneapi.backends"]
-    assert entry_points["spheresfm"] == "sceneapi_map.spheresfm.plugin:plugin"
+    assert entry_points["spheresfm"] == "scenemap.spheresfm.plugin:plugin"
 
 
 def test_configured_entry_point_imports_plugin_object() -> None:

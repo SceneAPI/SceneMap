@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.spheresfm.backend import SphereSfMBackend
+from scenemap.spheresfm.backend import SphereSfMBackend
 
 
 def _fake_colmap(path: Path) -> Path:

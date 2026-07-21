@@ -6,17 +6,17 @@ from typing import Any
 
 import pytest
 
-from sceneapi_map.colmap.cli.backend import ColmapCliBackend
-from sceneapi_map.colmap.cli.plugin import MANIFEST, plugin
+from scenemap.colmap.cli.backend import ColmapCliBackend
+from scenemap.colmap.cli.plugin import MANIFEST, plugin
 
 
 def test_plugin_manifest_ids_match_hub_registry_expectations() -> None:
     assert MANIFEST["plugin_id"] == "colmap_cli"
     # Manifest identity was re-pointed at this merged repo (see README
-    # migration notes): package/repo coordinates name sceneapi-map
+    # migration notes): package/repo coordinates name scenemap
     # while the plugin id stays colmap_cli.
-    assert MANIFEST["entry_points"] == ["sceneapi_map.colmap.cli.plugin:plugin"]
-    assert MANIFEST["package_name"] == "sceneapi-map"
+    assert MANIFEST["entry_points"] == ["scenemap.colmap.cli.plugin:plugin"]
+    assert MANIFEST["package_name"] == "scenemap"
     assert [provider["provider_id"] for provider in MANIFEST["providers"]] == ["colmap_cli"]
     assert plugin.backend_name == "colmap_cli"
 
@@ -37,7 +37,7 @@ def test_plugin_entry_point_target_imports_and_discovers_manifest(
 
     entry_point = metadata.EntryPoint(
         name="colmap_cli",
-        value="sceneapi_map.colmap.cli.plugin:plugin",
+        value="scenemap.colmap.cli.plugin:plugin",
         group="sceneapi.backends",
     )
 
@@ -55,7 +55,7 @@ def test_plugin_entry_point_target_imports_and_discovers_manifest(
     discovered = discovery.discover_plugins(load=True)
 
     assert discovered[0].plugin_id == "colmap_cli"
-    assert discovered[0].entry_point == "sceneapi_map.colmap.cli.plugin:plugin"
+    assert discovered[0].entry_point == "scenemap.colmap.cli.plugin:plugin"
     assert discovered[0].manifest is not None
     assert discovered[0].manifest.provider_ids() == ["colmap_cli"]
 
@@ -77,4 +77,4 @@ def test_pyproject_declares_sfmapi_backend_entry_point() -> None:
     entry_points = pyproject["project"]["entry-points"]["sceneapi.backends"]
     # The unified pyproject now declares all three COLMAP entry points;
     # this provider's row must keep its historical name.
-    assert entry_points["colmap_cli"] == "sceneapi_map.colmap.cli.plugin:plugin"
+    assert entry_points["colmap_cli"] == "scenemap.colmap.cli.plugin:plugin"

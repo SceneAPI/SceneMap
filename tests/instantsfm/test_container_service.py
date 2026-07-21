@@ -4,7 +4,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from sceneapi_map.instantsfm import container_service
+from scenemap.instantsfm import container_service
 
 
 class _FakeBackend:

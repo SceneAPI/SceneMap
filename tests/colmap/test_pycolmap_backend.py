@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.pycolmap.backend import CapabilityUnavailableError
-from sceneapi_map.colmap.pycolmap_backend import PycolmapBackend
+from scenemap.colmap.pycolmap.backend import CapabilityUnavailableError
+from scenemap.colmap.pycolmap_backend import PycolmapBackend
 
 
 def _count_positive_rows(database_path: Path, table: str) -> int:

@@ -8,11 +8,11 @@ from typing import Any
 
 import pytest
 
-from sceneapi_map.colmap.native.backend import ColmapCliBackend
-from sceneapi_map.colmap.native.cpp_inmemory_backend import CppInmemoryBackend
-from sceneapi_map.colmap.native.cpp_native_backend import CppNativeBackend
-from sceneapi_map.colmap.native.plugin import get_plugin_manifest, manifest, plugin, register
-from sceneapi_map.colmap.pycolmap_backend import PycolmapBackend
+from scenemap.colmap.native.backend import ColmapCliBackend
+from scenemap.colmap.native.cpp_inmemory_backend import CppInmemoryBackend
+from scenemap.colmap.native.cpp_native_backend import CppNativeBackend
+from scenemap.colmap.native.plugin import get_plugin_manifest, manifest, plugin, register
+from scenemap.colmap.pycolmap_backend import PycolmapBackend
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 EXPECTED_PROVIDER_FACTORIES = {
@@ -30,10 +30,10 @@ def test_plugin_manifest_validates_against_sfm_hub_contract() -> None:
 
     assert validated.plugin_id == "colmap_native"
     # Manifest identity was re-pointed at this merged repo (see README
-    # migration notes): package/repo coordinates name sceneapi-map
+    # migration notes): package/repo coordinates name scenemap
     # while the plugin id stays colmap_native.
-    assert validated.package_name == "sceneapi-map"
-    assert validated.entry_points == ["sceneapi_map.colmap.native.plugin:plugin"]
+    assert validated.package_name == "scenemap"
+    assert validated.entry_points == ["scenemap.colmap.native.plugin:plugin"]
     assert set(validated.provider_ids()) == set(EXPECTED_PROVIDER_FACTORIES)
 
 
@@ -65,7 +65,7 @@ def test_declared_entry_point_loads_plugin_object() -> None:
     pyproject = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     entry_point_value = pyproject["project"]["entry-points"]["sceneapi.backends"]["colmap_native"]
 
-    assert entry_point_value == "sceneapi_map.colmap.native.plugin:plugin"
+    assert entry_point_value == "scenemap.colmap.native.plugin:plugin"
     loaded = metadata.EntryPoint(
         name="colmap_native",
         value=entry_point_value,

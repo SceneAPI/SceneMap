@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.realityscan.backend import REALITYSCAN_COMMANDS, RealityScanCliBackend
+from scenemap.realityscan.backend import REALITYSCAN_COMMANDS, RealityScanCliBackend
 
 
 def _fake_realityscan(path: Path) -> Path:
@@ -54,7 +54,7 @@ def test_action_catalog_exposes_native_actions() -> None:
 
 
 def test_gpu_required_commands_are_all_reachable() -> None:
-    from sceneapi_map.realityscan.backend import (
+    from scenemap.realityscan.backend import (
         _GPU_REQUIRED_COMMANDS,
         REALITYSCAN_COMMAND_SET,
     )

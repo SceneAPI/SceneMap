@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.realityscan.backend import REALITYSCAN_COMMANDS, RealityScanCliBackend
+from scenemap.realityscan.backend import REALITYSCAN_COMMANDS, RealityScanCliBackend
 
 sfmapi_backends = pytest.importorskip("sceneapi.backends")
 

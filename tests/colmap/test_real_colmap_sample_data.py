@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.native.backend import ColmapCliBackend as NativeColmapCliBackend
-from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
+from scenemap.colmap.native.backend import ColmapCliBackend as NativeColmapCliBackend
+from scenemap.colmap.pycolmap.backend import ColmapCliBackend as PycolmapColmapCliBackend
 
 # sfmapi_colmap and sfmapi_pycolmap carried this test as import-only
 # variants over their own (distinct) ColmapCliBackend implementations;

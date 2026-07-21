@@ -14,10 +14,10 @@ from typing import Any
 
 import pytest
 
-from sceneapi_map.colmap.cli.backend import ColmapCliBackend as CliBackend
-from sceneapi_map.colmap.native.backend import ColmapCliBackend as NativeBackend
-from sceneapi_map.colmap.pycolmap.backend import ColmapCliBackend as PycolmapBackend
-from sceneapi_map.colmap.stage_configs import (
+from scenemap.colmap.cli.backend import ColmapCliBackend as CliBackend
+from scenemap.colmap.native.backend import ColmapCliBackend as NativeBackend
+from scenemap.colmap.pycolmap.backend import ColmapCliBackend as PycolmapBackend
+from scenemap.colmap.stage_configs import (
     COLMAP_STAGE_CONFIGS,
     RUNTIME_MANAGED_COLMAP_OPTIONS,
 )

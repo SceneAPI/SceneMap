@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.model import Reconstruction
-from sceneapi_map.colmap.pycolmap.backend import (
+from scenemap.colmap.model import Reconstruction
+from scenemap.colmap.pycolmap.backend import (
     COLMAP_COMMANDS,
     COLMAP_EXPORT_TYPES,
     CapabilityUnavailableError,

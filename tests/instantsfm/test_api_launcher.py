@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from sceneapi_map.instantsfm.api_launcher import build_parser, configure_environment
+from scenemap.instantsfm.api_launcher import build_parser, configure_environment
 
 
 def _fake_instantsfm(root: Path) -> Path:

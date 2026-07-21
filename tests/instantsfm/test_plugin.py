@@ -4,15 +4,15 @@ import tomllib
 from importlib import import_module
 from pathlib import Path
 
-from sceneapi_map.instantsfm.backend import InstantSfMBackend
-from sceneapi_map.instantsfm.plugin import get_plugin_manifest, plugin
+from scenemap.instantsfm.backend import InstantSfMBackend
+from scenemap.instantsfm.plugin import get_plugin_manifest, plugin
 
 
 def test_plugin_manifest_matches_hub_contract() -> None:
     manifest = get_plugin_manifest()
 
     assert manifest["plugin_id"] == "instantsfm"
-    assert manifest["entry_points"] == ["sceneapi_map.instantsfm.plugin:plugin"]
+    assert manifest["entry_points"] == ["scenemap.instantsfm.plugin:plugin"]
     assert [provider["provider_id"] for provider in manifest["providers"]] == ["instantsfm"]
     assert manifest["compatibility"]["torch"]["device"] == "cuda"
     assert manifest["runtime_modes"]["container_service"]["execution"]["gpu"] == "required"
@@ -30,9 +30,9 @@ def test_pyproject_declares_sfmapi_backend_entry_point() -> None:
     pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
 
     entry_points = pyproject["project"]["entry-points"]["sceneapi.backends"]
-    assert entry_points["instantsfm"] == "sceneapi_map.instantsfm.plugin:plugin"
+    assert entry_points["instantsfm"] == "scenemap.instantsfm.plugin:plugin"
     scripts = pyproject["project"]["scripts"]
-    assert scripts["sfmapi-instantsfm-service"] == "sceneapi_map.instantsfm.container_service:main"
+    assert scripts["sfmapi-instantsfm-service"] == "scenemap.instantsfm.container_service:main"
 
 
 def test_configured_entry_point_imports_plugin_object() -> None:

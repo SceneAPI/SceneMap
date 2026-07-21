@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.spheresfm.backend import (
+from scenemap.spheresfm.backend import (
     SPHERESFM_CAPABILITIES,
     SPHERESFM_COMMANDS,
     SphereSfMBackend,

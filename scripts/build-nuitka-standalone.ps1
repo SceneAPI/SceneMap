@@ -35,7 +35,7 @@ function Copy-RuntimeDirectory {
 
 Invoke-NativeChecked $PythonExecutable @(
     "-c",
-    "import sceneapi, sceneapi_map.colmap, uvicorn, fastmcp; import nuitka"
+    "import sceneapi, scenemap.colmap, uvicorn, fastmcp; import nuitka"
 )
 
 if ($Clean -and (Test-Path $OutputDir)) {
@@ -54,7 +54,7 @@ $nuitkaArgs = @(
     "--output-dir=$OutputDir",
     "--output-filename=$OutputName",
     "--include-package=sceneapi",
-    "--include-package=sceneapi_map.colmap",
+    "--include-package=scenemap.colmap",
     "--include-package=uvicorn",
     "--include-package=fastmcp",
     "--include-package=fastapi",
@@ -78,7 +78,7 @@ $nuitkaArgs = @(
     "--include-module=uvicorn.protocols.websockets.auto",
     "--include-module=uvicorn.lifespan.on",
     "--noinclude-pytest-mode=nofollow",
-    "src/sceneapi_map/colmap/api_launcher.py"
+    "src/scenemap/colmap/api_launcher.py"
 )
 
 Invoke-NativeChecked $PythonExecutable $nuitkaArgs

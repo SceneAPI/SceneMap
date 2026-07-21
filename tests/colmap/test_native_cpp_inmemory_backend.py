@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from sceneapi_map.colmap.native.backend import CapabilityUnavailableError, ValidationError
-from sceneapi_map.colmap.native.cpp_inmemory_backend import CppInmemoryBackend
+from scenemap.colmap.native.backend import CapabilityUnavailableError, ValidationError
+from scenemap.colmap.native.cpp_inmemory_backend import CppInmemoryBackend
 
 
 def _cpp_extension_available() -> bool:
